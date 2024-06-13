@@ -13,50 +13,39 @@ let partners = {
   }
 }
 
+/* 
+  APPLICATION MIDDLEWARE
+  This section contains some server configuration.
+  You will likely not need to change anything here to meet the requirements.
+  (but you are welcome to, if you'd like)
+*/
+
+// Parse request bodies as JSON
 app.use(express.json());
+// Enable CORS for the frontend so it can call the backend
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
-});
+})
 
-// Fetch all partners
+/*
+  APPLICATION ROUTES
+*/
+
 app.get('/partners', (req, res) => {
   res.status(200).send(partners);
 });
 
-// Add a new partner
 app.post('/partners', (req, res) => {
   const { id, name, description, thumbnailUrl } = req.body;
-  if (partners[id]) {
-    return res.status(400).send({ error: 'Partner with this ID already exists' });
-  }
   partners[id] = { name, description, thumbnailUrl, active: true };
   res.status(201).send(partners[id]);
 });
 
-// Delete a partner by ID
-app.delete('/partners/:id', (req, res) => {
-  const { id } = req.params;
-  if (!partners[id]) {
-    return res.status(404).send({ error: 'Partner not found' });
-  }
-  delete partners[id];
-  res.status(204).send();
-});
 
-// Update a partner's active state
-app.put('/partners/:id', (req, res) => {
-  const { id } = req.params;
-  const { active } = req.body;
-  if (!partners[id]) {
-    return res.status(404).send({ error: 'Partner not found' });
-  }
-  partners[id].active = active;
-  res.status(200).send(partners[id]);
-});
-
+// Start the backend
 app.listen(port, () => {
   console.log(`Express server starting on port ${port}!`);
 });

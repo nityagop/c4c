@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import PartnerTile from './PartnerTile'; // Ensure the path is correct
+import PartnerTile from './PartnerTile';
 
+/*
+  The top-level component containing everything relevant to the dashboard,
+  including information on each partner
+*/
 function Dashboard() {
   const [partners, setPartners] = useState({});
 
+  // Load all partners on initial page load
   useEffect(() => {
-    fetchPartners();
+    getPartners();
   }, []);
 
-  const fetchPartners = async () => {
+  const getPartners = async () => {
     try {
       const res = await fetch('http://localhost:4000/partners');
       const data = await res.json();
       setPartners(data);
     } catch (err) {
-      console.error('Failed to fetch partners', err);
+      
     }
   };
 
@@ -31,7 +36,7 @@ function Dashboard() {
         fetchPartners();
       }
     } catch (err) {
-      console.error('Failed to add partner', err);
+      
     }
   };
 
@@ -44,7 +49,7 @@ function Dashboard() {
         fetchPartners();
       }
     } catch (err) {
-      console.error('Failed to delete partner', err);
+      
     }
   };
 
@@ -61,7 +66,7 @@ function Dashboard() {
         fetchPartners();
       }
     } catch (err) {
-      console.error('Failed to update partner', err);
+     
     }
   };
 
@@ -83,30 +88,24 @@ function Dashboard() {
   );
 }
 
+
 function AddPartnerForm({ onAddPartner }) {
-  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [active, setActive] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAddPartner({ id, name, description, thumbnailUrl });
-    setId('');
+    onAddPartner({name, description, thumbnailUrl, active });
     setName('');
     setDescription('');
     setThumbnailUrl('');
+    setActive(false);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="ID"
-        value={id}
-        onChange={(e) => setId(e.target.value)}
-        required
-      />
       <input
         type="text"
         placeholder="Partner Name"
@@ -128,14 +127,14 @@ function AddPartnerForm({ onAddPartner }) {
         onChange={(e) => setThumbnailUrl(e.target.value)}
         required
       />
-
-      <input 
-        type="checkbox" 
-        
-        checked={active} 
-        onChange={(e) => onToggleActive(e.target.checked)} 
-     
-      />
+      <label>
+        Active:
+        <input 
+          type="checkbox" 
+          checked={active} 
+          onChange={(e) => setActive(e.target.checked)} 
+        />
+      </label>
       <button type="submit">Add Partner</button>
     </form>
   );

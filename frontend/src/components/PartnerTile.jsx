@@ -1,7 +1,10 @@
 import React from 'react';
-//import './PartnerTile.css'; // Make sure the path is correct
 
-function PartnerTile({ partnerData, onDelete, onToggleActive }) {
+/*
+  A block for a single partner, containing information for them
+  along with any tools to manage said information
+*/
+function PartnerTile({ partnerData, onDelete }) {
   const { name, description, thumbnailUrl, active } = partnerData;
 
   return (
