@@ -1,21 +1,22 @@
 import React from 'react';
+//import './PartnerTile.css'; // Make sure the path is correct
 
-/*
-  A block for a single partner, containing information for them
-  along with any tools to manage said information
-*/
-
-function PartnerTile({ partnerData }) {
+function PartnerTile({ partnerData, onDelete, onToggleActive }) {
+  const { name, description, thumbnailUrl, active } = partnerData;
 
   return (
     <div className="partner-tile">
-      <img className="partner-thumbnail" src='' />
-      <hr />
-      <div className="partner-info">
-        This is some placeholder content - you'll need to replace the content here with actual partner information.
-      </div>
+      <img 
+        src={thumbnailUrl} 
+        alt={name} 
+        className="partner-thumbnail" 
+      />
+      <h2>{name}</h2>
+      <p>{description}</p>
+      
+      <button onClick={onDelete}>Delete</button>
     </div>
-  )
+  );
 }
 
 export default PartnerTile;
