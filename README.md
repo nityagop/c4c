@@ -12,7 +12,7 @@ git clone https://github.com/nityagop/c4c.git
 ```
 2. In a terminal, run `npm install` **at the root of this project** to install the required packages
 3. Run `npm run dev` **at the root of this project** to start the app locally
-4. Visit `http://localhost:3000` to view the website
+4. Visit `http://localhost:3001` to view the website
 ## Overview 
 The main goal of this website is to allow C4C members to easily handle partner information. This website allows users to add partner information such as their name, description, thumbnail image, and whether they are active. When the partner information is no longer needed, users are able to delete that specific tile. 
 
